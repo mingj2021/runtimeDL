@@ -1,0 +1,22 @@
+set(SAMPLE_DEP_LIBS
+    nvinfer
+    nvonnxparser
+    algorithms
+)
+
+# algorithms
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../algorithms")
+link_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../algorithms/build/Release")
+
+# commons
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../commons")
+
+add_executable(${TARGET_NAME} ${SAMPLE_SOURCES})
+target_link_libraries(${TARGET_NAME} ${TORCH_LIBRARIES})
+target_link_libraries(${TARGET_NAME} ${OpenCV_LIBS})
+target_link_libraries(${TARGET_NAME} TorchVision::TorchVision)
+target_link_libraries(${TARGET_NAME} ${SAMPLE_DEP_LIBS})
+
+add_dependencies(samples ${TARGET_NAME})
+
+set_property(TARGET ${TARGET_NAME} PROPERTY CXX_STANDARD 17)
